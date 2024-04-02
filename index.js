@@ -10,9 +10,9 @@ if (process.env.PORT) {
   PORT = 8000;
 }
 var Cloudant = require('@cloudant/cloudant');
-var url = "https://apikey-v2-1adppxbvys2khukkgcepzrof06wza82iv7wn24gfpqql:f3e8c2e7e9f0198b60ec53807c8659da@7ac0add5-ad7b-4fbf-a920-ae110ed88dc8-bluemix.cloudantnosqldb.appdomain.cloud";
-var username = "apikey-v2-1adppxbvys2khukkgcepzrof06wza82iv7wn24gfpqql";
-var password = "f3e8c2e7e9f0198b60ec53807c8659da";
+var url = "https://apikey-v2-2e5kdlgplmovp6jb5xfuok6afjra827zegiyhiw2ul1u:d32ec5f34b80eec562777356d8d80d1b@b9884815-a388-4e5e-8d1d-784e73de0044-bluemix.cloudantnosqldb.appdomain.cloud";
+var username = "apikey-v2-2e5kdlgplmovp6jb5xfuok6afjra827zegiyhiw2ul1u";
+var password = "d32ec5f34b80eec562777356d8d80d1b";
 var app = express();
 const bodyParser = require('body-parser');
 //const cors = require('cors');
