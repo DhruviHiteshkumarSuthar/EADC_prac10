@@ -98,7 +98,13 @@ cloudant.use(database_name).insert({ "name": name, "address": address, "phone": 
 /////   insert bulk documents
 app.post("/insert-bulk/:database_name", function (req, res) {
   const database_name = req.params.database_name;
-  const students = [];
+   const students = req.body.docs.map(doc => ({
+    _id: doc.id,
+    name: doc.name,
+    address: doc.address,
+    phone: doc.phone,
+    age: doc.age
+  }));
 
   for (let i = 0; i < 3; i++) {
     const student = {
