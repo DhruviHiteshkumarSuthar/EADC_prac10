@@ -98,40 +98,34 @@ cloudant.use(database_name).insert({ "name": name, "address": address, "phone": 
 /////   insert bulk documents
 app.post("/insert-bulk/:database_name", function (req, res) {
   const database_name = req.params.database_name;
-   const students = req.body.docs.map(doc => ({
-    _id: doc.id,
+  const students = req.body.docs.map(doc => ({
+    _id: doc.id, // Ensure this is the correct field for your document ID
     name: doc.name,
     address: doc.address,
     phone: doc.phone,
     age: doc.age
   }));
 
-  for (let i = 0; i < 3; i++) {
-    const student = {
-      _id: req.body.docs[i].id,
-      name: req.body.docs[i].name,
-      address: req.body.docs[i].address,
-      phone: req.body.docs[i].phone,
-      age: req.body.docs[i].age,
-    };
-
-    students.push(student);
-  }
-
-  Cloudant({ url: url, username: username, password: password }, function (err, cloudant, pong) {
+  // Initialize Cloudant outside of your route handler if possible
+  Cloudant({ url: url, username: username, password: password }, function (err, cloudant) {
     if (err) {
-      return console.log("Failed to initialize Cloudant: " + err.message);
+      console.log("Failed to initialize Cloudant: " + err.message);
+      res.status(500).send("Failed to initialize Cloudant");
+      return;
     }
 
-    cloudant.use(database_name).bulk({ docs: students }, function (err) {
+    const db = cloudant.use(database_name);
+    db.bulk({ docs: students }, function (err, result) {
       if (err) {
-        throw err;
+        console.log("Error inserting documents: " + err.message);
+        res.status(500).send("Error inserting documents");
+        return;
       }
-
-      res.send("Inserted all documents");
+      res.send("Inserted all documents: " + JSON.stringify(result));
     });
   });
 });
+
 
 
 
